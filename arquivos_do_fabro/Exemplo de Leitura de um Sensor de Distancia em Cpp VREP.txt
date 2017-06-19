@@ -1,0 +1,95 @@
+// This file was automatically created for V-REP release V3.3.1 Rev1 on May 17th 2016
+
+// Make sure to have the server side running in V-REP!
+// Start the server from a child script with following command:
+// simExtRemoteApiStart(portNumber) -- starts a remote API server service on the specified port
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+#include "flieMotorE.h"
+#include "flieMotorD.h"
+
+
+extern "C" {
+    #include "extApi.h"
+}
+
+int main(int argc,char* argv[])
+{
+    int portNb=0;
+    int leftMotorHandle;
+    int rightMotorHandle;
+    int sensor[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    int distanceSensors[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    flieMotorD* motorD = new flieMotorD();
+    flieMotorE* motorE = new flieMotorE();
+
+    if (argc>=5)
+    {
+        portNb=atoi(argv[1]);
+        leftMotorHandle=atoi(argv[2]);
+        rightMotorHandle=atoi(argv[3]);
+        for(int i = 0; i < 8; i++){
+            sensor[i] = atoi(argv[i+4]);
+        }
+    }
+    else
+    {
+        printf("Indicate following arguments: 'portNumber leftMotorHandle rightMotorHandle sensorHandle'!\n");
+        extApi_sleepMs(5000);
+        return 0;
+    }
+
+    simxInt clientID=simxStart((simxChar*)"127.0.0.1",portNb,true,true,2000,5);
+   
+    if (clientID!=-1)
+    {
+        int driveBackStartTime=-99000;
+        float motorSpeeds[2];
+
+        while (simxGetConnectionId(clientID)!=-1)
+        {
+            simxUChar sensorTrigger = 0;
+
+            for(int i = 0; i < 8; i++){
+                float distanceAxis[3];
+
+                simxReadProximitySensor(clientID,sensor[i],NULL,&(distanceAxis[0]),NULL,NULL,simx_opmode_streaming);
+
+                float distance = pow(distanceAxis[0],2) + pow(distanceAxis[1],2) + pow(distanceAxis[2],2);
+                distance = sqrt(distance);
+                if(distance > 1)
+                    distance = 1023;
+                else
+                    distance = distance * 1023;
+
+                distance = 1023 - distance;
+                distanceSensors[i] = distance;
+            }
+
+            float distanceL = (distanceSensors[0] + distanceSensors[1] + distanceSensors[2])/3;
+            float distanceF = (distanceSensors[3] + distanceSensors[4])/2;
+            float distanceR = (distanceSensors[5] + distanceSensors[6] + distanceSensors[7])/3;
+
+            float velMotorD = motorD->makeInference(distanceF, distanceR, distanceL);
+            float velMotorE = motorE->makeInference(distanceF, distanceR, distanceL);
+
+            if(velMotorD == 0.0f)
+                velMotorD = 4.0f;
+            if(velMotorE == 0)
+                velMotorE = 4.0f;
+
+            simxSetJointTargetVelocity(clientID,leftMotorHandle,velMotorE,simx_opmode_oneshot);
+            simxSetJointTargetVelocity(clientID,rightMotorHandle,velMotorD,simx_opmode_oneshot);
+
+            extApi_sleepMs(5);
+        }
+        simxFinish(clientID);
+    }
+    return(0);
+}
+
+

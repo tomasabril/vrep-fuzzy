@@ -1,0 +1,12 @@
+1	- Number of Inputs of Input Pattern
+4	- Number of Outputs of Output Pattern
+10 	- Number of Delayed Inputs
+5	- Number of Delayed Outputs
+2	- Number of Layers of the (Recurrent) Neural Net
+51	- Number of neurons of 1st hidden layer
+4	- Number of neurons of 2nd hidden layer...etc!
+0.5	- Parameter momentum
+0.3	- Parameter learning-rate
+0.0001	- Parameter max_err
+
+
