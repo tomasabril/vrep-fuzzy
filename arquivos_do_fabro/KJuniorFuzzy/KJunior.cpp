@@ -13,7 +13,7 @@ extern "C" {
 int main(int argc, const char * argv[]) {
 
         std::string s;
-
+	int countdown = 0;
 	int portNb, leftMotorHandle, rightMotorHandle;
 	int sensors [6] = {0, 0, 0, 0, 0, 0};
 	float distances [6] = {0, 0, 0, 0, 0, 0};
@@ -60,10 +60,9 @@ a remote API function return code
 	simxInt clientID=simxStart((simxChar*)"127.0.0.1",portNb,true,true,2000,5);
 
 	//Creating and opening console
-	simxInt consoleHandle = -1;
-	simxInt consoleID = simxAuxiliaryConsoleOpen(clientID,"Console Window for Fuzzy Project",10000,6,NULL,NULL,NULL,NULL, &consoleHandle, simx_opmode_blocking);
+	
 	//Printing something on the console
-	simxInt returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"Starting simulation",simx_opmode_blocking);
+	simxInt returnNumber;
 
 	leftMotor* motorE = new leftMotor();
         rightMotor* motorD = new rightMotor();
@@ -112,7 +111,7 @@ a remote API function return code
 
 			 */
 
-			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n\n",simx_opmode_blocking);
+			
 
                        /* for(int i=0; i<6; i++){
 				//converting from int to String
@@ -143,7 +142,7 @@ a remote API function return code
 				maxDireita = distances[4];
 
 
-
+			/*
 			//break line
 			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n ==Valores Max==\n",simx_opmode_blocking);
 
@@ -166,7 +165,7 @@ a remote API function return code
 
 			//break line
 			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n",simx_opmode_blocking);
-
+			*/
                         /*
 
 			 Applying Fuzzy rules
@@ -203,33 +202,41 @@ a remote API function return code
 			// maxDireita maxEsquerda maxFrente*/
 			float valueFuzzyE;
 			float valueFuzzyD;
-
-			if(maxDireita < 100){
-				valueFuzzyD = 1;	
-			}else if(maxDireita >= 100 && maxDireita < 350){
-				float maxDaux = maxDireita;
-				maxDaux = maxDaux -100;
-				maxDaux = 1-(maxDaux/250);
-				valueFuzzyD = maxDaux;			
-			}else if(maxDireita >= 350){
-				valueFuzzyD = 0;
+			if(maxFrente < 30 && countdown == 0){
+				countdown = 500;
 			}
-			if(maxEsquerda < 100){
-				valueFuzzyE = 1;	
-			}else if(maxEsquerda >= 100 && maxEsquerda < 350){
-				float maxEaux = maxEsquerda ;
-				maxEaux = maxEaux -100;
-				maxEaux = 1-(maxEaux/250);
-				valueFuzzyE = maxEaux;			
-			}else if(maxEsquerda  >= 350){
-				valueFuzzyE = 0;
+			if(countdown == 0){
+
+				if(maxDireita < 30){
+					valueFuzzyD = 1;	
+				}else if(maxDireita >= 30 && maxDireita < 350){
+					float maxDaux = maxDireita;
+					maxDaux = maxDaux -30;
+					maxDaux = 1-(maxDaux/320);
+					valueFuzzyD = maxDaux;			
+				}else if(maxDireita >= 350){
+					valueFuzzyD = 0;
+				}
+				if(maxEsquerda < 30){
+					valueFuzzyE = 1;	
+				}else if(maxEsquerda >= 30 && maxEsquerda < 350){
+					float maxEaux = maxEsquerda ;
+					maxEaux = maxEaux -30;
+					maxEaux = 1-(maxEaux/320);
+					valueFuzzyE = maxEaux;			
+				}else if(maxEsquerda  >= 350){
+					valueFuzzyE = 0;
+				}
+
+			
+				valueMotorE = 3- 2.9*valueFuzzyD;
+				valueMotorD = 3- 2.9*valueFuzzyE;
+			}else{
+				valueMotorE =	+2.5;
+				valueMotorD = 	-2.5;
+				countdown--;			
 			}
 			
-
-
-			valueMotorE = 3- 6*valueFuzzyD;
-			valueMotorD = 3- 6*valueFuzzyE;
-
 
 
 
