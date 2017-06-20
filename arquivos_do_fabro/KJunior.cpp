@@ -13,14 +13,15 @@ extern "C" {
 int main(int argc, const char * argv[]) {
 
         std::string s;
-
+	int countdown = 0;
 	int portNb, leftMotorHandle, rightMotorHandle;
 	int sensors [6] = {0, 0, 0, 0, 0, 0};
 	float distances [6] = {0, 0, 0, 0, 0, 0};
 //        float alternativedistances [6] = {0, 0, 0, 0, 0, 0};
 
-
-
+	bool ginga = true;
+    float valueMotorE = 0;
+    float valueMotorD = 0;
 	//check if there are correct quantity of parameters
 	if (argc>=10)
 	{
@@ -60,10 +61,9 @@ a remote API function return code
 	simxInt clientID=simxStart((simxChar*)"127.0.0.1",portNb,true,true,2000,5);
 
 	//Creating and opening console
-	simxInt consoleHandle = -1;
-	simxInt consoleID = simxAuxiliaryConsoleOpen(clientID,"Console Window for Fuzzy Project",10000,6,NULL,NULL,NULL,NULL, &consoleHandle, simx_opmode_blocking);
+
 	//Printing something on the console
-	simxInt returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"Starting simulation",simx_opmode_blocking);
+	simxInt returnNumber;
 
 	leftMotor* motorE = new leftMotor();
         rightMotor* motorD = new rightMotor();
@@ -94,14 +94,14 @@ a remote API function return code
                                     distances[i] = sqrt(pow(readDistance[0], 2.0) + pow(readDistance[1], 2.0) + pow(readDistance[2], 2.0))*3200;
 
 
-                                if(distances[i]>999)
-                                        distances[i] = 999;
+                                if(distances[i]>350)
+                                        distances[i] = 350;
 				//getting complement of it (1000-x)
-                                distances[i] = 350 - distances[i];
+                               //distances[i] = 350 - distances[i];
                                 }
                                 else
                                 {
-                                    distances[i]= 998;
+                                    distances[i]= 350;
                                 }
 
 			}
@@ -112,7 +112,7 @@ a remote API function return code
 
 			 */
 
-			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n\n",simx_opmode_blocking);
+
 
                        /* for(int i=0; i<6; i++){
 				//converting from int to String
@@ -143,7 +143,7 @@ a remote API function return code
 				maxDireita = distances[4];
 
 
-
+			/*
 			//break line
 			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n ==Valores Max==\n",simx_opmode_blocking);
 
@@ -166,14 +166,13 @@ a remote API function return code
 
 			//break line
 			returnNumber = simxAuxiliaryConsolePrint(clientID,consoleHandle,"\n",simx_opmode_blocking);
-
+			*/
                         /*
 
 			 Applying Fuzzy rules
 
 			 */
-			float valueMotorE;
-			float valueMotorD;// = motorD->makeInference(maxEsquerda, maxFrente, maxDireita);//maxEsquerda, maxFrente, maxDireita);
+			;// = motorD->makeInference(maxEsquerda, maxFrente, maxDireita);//maxEsquerda, maxFrente, maxDireita);
 			//valueMotorE = valueMotorE;//*0.31415;
 			//valueMotorD = valueMotorD;//*0.31415;
 /*
@@ -199,41 +198,57 @@ a remote API function return code
 			/*
 			 Writing motor speeds back to simulator*/
 
-			 
+
 			// maxDireita maxEsquerda maxFrente*/
 			float valueFuzzyE;
 			float valueFuzzyD;
-
-			if(maxDireita < 100){
-				valueFuzzyD = 1;	
-			}else if(maxDireita >= 100 && maxDireita < 350){
-				float maxDaux = maxDireita;
-				maxDaux = maxDaux -100;
-				maxDaux = 1-(maxDaux/250);
-				valueFuzzyD = maxDaux;			
-			}else if(maxDireita >= 350){
-				valueFuzzyD = 0;
+			if(abs(valueMotorD)<0.1 && abs(valueMotorD)<0.1 && countdown == 0){
+				countdown = 100;
+				ginga = !ginga;
 			}
-			if(maxEsquerda < 100){
-				valueFuzzyE = 1;	
-			}else if(maxEsquerda >= 100 && maxEsquerda < 350){
-				float maxEaux = maxEsquerda ;
-				maxEaux = maxEaux -100;
-				maxEaux = 1-(maxEaux/250);
-				valueFuzzyE = maxEaux;			
-			}else if(maxEsquerda  >= 350){
-				valueFuzzyE = 0;
+
+
+				if(maxDireita < 30){
+					valueFuzzyD = 1;
+				}else if(maxDireita >= 30 && maxDireita < 250){
+					float maxDaux = maxDireita;
+					maxDaux = maxDaux -30;
+					maxDaux = 1-(maxDaux/220);
+					valueFuzzyD = maxDaux;
+				}else if(maxDireita >= 220){
+					valueFuzzyD = 0;
+				}
+				if(maxEsquerda < 30){
+					valueFuzzyE = 1;
+				}else if(maxEsquerda >= 30 && maxEsquerda < 200){
+					float maxEaux = maxEsquerda ;
+					maxEaux = maxEaux -30;
+					maxEaux = 1-(maxEaux/170);
+					valueFuzzyE = maxEaux;
+				}else if(maxEsquerda  >= 200){
+					valueFuzzyE = 0;
+				}
+
+			if(countdown == 0){
+				valueMotorE = 1.5- 3*valueFuzzyD;
+				valueMotorD = 1.5- 3*valueFuzzyE;
+			}else if(ginga == true){
+				valueMotorE =	-2.5;
+				valueMotorD = 	+2.5;
+				countdown--;
+
+
+			}else {
+				valueMotorE =  +2.5;
+				valueMotorD = 	-2.5;
+				countdown--;
+
 			}
-			
-
-
-			valueMotorE = 3- 6*valueFuzzyD;
-			valueMotorD = 3- 6*valueFuzzyE;
+        printf("\n maxd= %f maxe = %f maxf = %f velme = %f velmd = %f\n", maxDireita, maxEsquerda, maxFrente, valueMotorE, valueMotorD);
 
 
 
 
-			
 
 			if(valueMotorD < -5.0)
 				valueMotorD = -5;
@@ -244,6 +259,7 @@ a remote API function return code
 				valueMotorD = 5;
 			if(valueMotorE > 5.0)
 				valueMotorE = 5;
+
 
 
 
