@@ -203,7 +203,7 @@ a remote API function return code
 			float valueFuzzyE;
 			float valueFuzzyD;
 			if(maxFrente <= 50 && countdown == 0){
-				countdown = 300;
+				countdown = 370;
 				ginga = !ginga;
 			}
 			if(countdown == 0){
