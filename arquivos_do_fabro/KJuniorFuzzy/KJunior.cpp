@@ -19,7 +19,7 @@ int main(int argc, const char * argv[]) {
 	float distances [6] = {0, 0, 0, 0, 0, 0};
 //        float alternativedistances [6] = {0, 0, 0, 0, 0, 0};
 
-
+	bool ginga = true;
 
 	//check if there are correct quantity of parameters
 	if (argc>=10)
@@ -93,14 +93,14 @@ a remote API function return code
                                     distances[i] = sqrt(pow(readDistance[0], 2.0) + pow(readDistance[1], 2.0) + pow(readDistance[2], 2.0))*3200;
 
 
-                                if(distances[i]>999)
-                                        distances[i] = 999;
+                                if(distances[i]>350)
+                                        distances[i] = 350;
 				//getting complement of it (1000-x)
                                 distances[i] = 350 - distances[i];
                                 }
                                 else
                                 {
-                                    distances[i]= 998;
+                                    distances[i]= 350;
                                 }
 
 			}
@@ -203,7 +203,8 @@ a remote API function return code
 			float valueFuzzyE;
 			float valueFuzzyD;
 			if(maxFrente <= 50 && countdown == 0){
-				countdown = 75;
+				countdown = 300;
+				ginga = !ginga;
 			}
 			if(countdown == 0){
 
@@ -229,12 +230,19 @@ a remote API function return code
 				}
 
 			
-				valueMotorE = 3- 3.3*valueFuzzyD;
-				valueMotorD = 3- 3.3*valueFuzzyE;
-			}else{
+				valueMotorE = 3- 2.9*valueFuzzyD;
+				valueMotorD = 3- 2.9*valueFuzzyE;
+			}else if(ginga == true){
 				valueMotorE =	-2.5;
 				valueMotorD = 	-0.5;
-				countdown--;			
+				countdown--;
+				
+		
+			}else {
+				valueMotorE =	-0.5;
+				valueMotorD = 	-2.5;
+				countdown--;	
+					
 			}
 			
 
