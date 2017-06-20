@@ -202,29 +202,29 @@ a remote API function return code
 			// maxDireita maxEsquerda maxFrente*/
 			float valueFuzzyE;
 			float valueFuzzyD;
-			if(maxFrente < 30 && countdown == 0){
-				countdown = 500;
+			if(maxFrente <= 50 && countdown == 0){
+				countdown = 150;
 			}
 			if(countdown == 0){
 
 				if(maxDireita < 30){
 					valueFuzzyD = 1;	
-				}else if(maxDireita >= 30 && maxDireita < 350){
+				}else if(maxDireita >= 30 && maxDireita < 200){
 					float maxDaux = maxDireita;
 					maxDaux = maxDaux -30;
-					maxDaux = 1-(maxDaux/320);
+					maxDaux = 1-(maxDaux/170);
 					valueFuzzyD = maxDaux;			
-				}else if(maxDireita >= 350){
+				}else if(maxDireita >= 200){
 					valueFuzzyD = 0;
 				}
 				if(maxEsquerda < 30){
 					valueFuzzyE = 1;	
-				}else if(maxEsquerda >= 30 && maxEsquerda < 350){
+				}else if(maxEsquerda >= 30 && maxEsquerda < 200){
 					float maxEaux = maxEsquerda ;
 					maxEaux = maxEaux -30;
-					maxEaux = 1-(maxEaux/320);
+					maxEaux = 1-(maxEaux/170);
 					valueFuzzyE = maxEaux;			
-				}else if(maxEsquerda  >= 350){
+				}else if(maxEsquerda  >= 200){
 					valueFuzzyE = 0;
 				}
 
@@ -232,8 +232,8 @@ a remote API function return code
 				valueMotorE = 3- 2.9*valueFuzzyD;
 				valueMotorD = 3- 2.9*valueFuzzyE;
 			}else{
-				valueMotorE =	+2.5;
-				valueMotorD = 	-2.5;
+				valueMotorE =	-2.5;
+				valueMotorD = 	-2;
 				countdown--;			
 			}
 			
