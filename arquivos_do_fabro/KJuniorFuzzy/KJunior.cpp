@@ -203,7 +203,7 @@ a remote API function return code
 			float valueFuzzyE;
 			float valueFuzzyD;
 			if(maxFrente <= 50 && countdown == 0){
-				countdown = 150;
+				countdown = 75;
 			}
 			if(countdown == 0){
 
@@ -229,11 +229,11 @@ a remote API function return code
 				}
 
 			
-				valueMotorE = 3- 2.9*valueFuzzyD;
-				valueMotorD = 3- 2.9*valueFuzzyE;
+				valueMotorE = 3- 3.3*valueFuzzyD;
+				valueMotorD = 3- 3.3*valueFuzzyE;
 			}else{
 				valueMotorE =	-2.5;
-				valueMotorD = 	-2;
+				valueMotorD = 	-0.5;
 				countdown--;			
 			}
 			
