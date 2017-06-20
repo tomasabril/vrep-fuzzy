@@ -215,7 +215,7 @@ a remote API function return code
 				valueFuzzyD = 0;
 			}
 			if(maxEsquerda < 100){
-				valueFuzzyD = 1;	
+				valueFuzzyE = 1;	
 			}else if(maxEsquerda >= 100 && maxEsquerda < 350){
 				float maxEaux = maxEsquerda ;
 				maxEaux = maxEaux -100;
@@ -227,8 +227,8 @@ a remote API function return code
 			
 
 
-			valueMotorD = 5- 10*valueFuzzyD;
-			valueMotorE = 5- 10*valueFuzzyE;
+			valueMotorE = 3- 6*valueFuzzyD;
+			valueMotorD = 3- 6*valueFuzzyE;
 
 
 
