@@ -9,6 +9,34 @@
 extern "C" {
 	#include "extApi.h"
 }
+float fuzzyFy(float dist){
+float fuzzy;
+				if(dist < 150){
+					fuzzy = 1;
+				}else if(dist>= 150&& dist < 350){
+					float distaux = dist;
+					distaux  = distaux  -150;
+					distaux = 1-(distaux/200);
+					fuzzy = distaux;
+				}else if(dist >= 350){
+					fuzzy = 0;
+				}
+				return fuzzy;
+
+}
+float virarPouco(float fuzzy){
+if(fuzzy < 1 && fuzzy > 0)
+	return -6*fuzzy;
+else return 0;
+}
+float virarMuito(float fuzzy){
+if (fuzzy == 1)
+	return -6;
+	else return 0;
+}
+float virarNada(float fuzzy){
+                return 0;
+}
 
 int main(int argc, const char * argv[]) {
 
@@ -20,8 +48,8 @@ int main(int argc, const char * argv[]) {
 //        float alternativedistances [6] = {0, 0, 0, 0, 0, 0};
 
 	bool ginga = true;
-    float valueMotorE = 0;
-    float valueMotorD = 0;
+    float valueMotorE = 3;
+    float valueMotorD = 3;
 	//check if there are correct quantity of parameters
 	if (argc>=10)
 	{
@@ -202,36 +230,16 @@ a remote API function return code
 			// maxDireita maxEsquerda maxFrente*/
 			float valueFuzzyE;
 			float valueFuzzyD;
-			if(abs(valueMotorD)<0.1 && abs(valueMotorD)<0.1 && countdown == 0){
-				countdown = 100;
+			if((fuzzyFy(maxFrente) == 1 && countdown == 0)){
+				//countdown = 150;
 				ginga = !ginga;
 			}
-
-
-				if(maxDireita < 30){
-					valueFuzzyD = 1;
-				}else if(maxDireita >= 30 && maxDireita < 250){
-					float maxDaux = maxDireita;
-					maxDaux = maxDaux -30;
-					maxDaux = 1-(maxDaux/220);
-					valueFuzzyD = maxDaux;
-				}else if(maxDireita >= 220){
-					valueFuzzyD = 0;
-				}
-				if(maxEsquerda < 30){
-					valueFuzzyE = 1;
-				}else if(maxEsquerda >= 30 && maxEsquerda < 200){
-					float maxEaux = maxEsquerda ;
-					maxEaux = maxEaux -30;
-					maxEaux = 1-(maxEaux/170);
-					valueFuzzyE = maxEaux;
-				}else if(maxEsquerda  >= 200){
-					valueFuzzyE = 0;
-				}
-
 			if(countdown == 0){
-				valueMotorE = 1.5- 3*valueFuzzyD;
-				valueMotorD = 1.5- 3*valueFuzzyE;
+				valueMotorE =  3 +(virarPouco(fuzzyFy(maxDireita))+virarMuito(fuzzyFy(maxDireita))+virarNada(fuzzyFy(maxDireita)));
+                                if(fuzzyFy(maxDireita) == 0)
+                                valueMotorD = 3 +(virarPouco(fuzzyFy(maxEsquerda))+virarMuito(fuzzyFy(maxEsquerda))+virarNada(fuzzyFy(maxEsquerda)));
+                                else
+                                valueMotorD = 3;
 			}else if(ginga == true){
 				valueMotorE =	-2.5;
 				valueMotorD = 	+2.5;
@@ -244,7 +252,7 @@ a remote API function return code
 				countdown--;
 
 			}
-        printf("\n maxd= %f maxe = %f maxf = %f velme = %f velmd = %f\n", maxDireita, maxEsquerda, maxFrente, valueMotorE, valueMotorD);
+        printf("\n maxd= %f maxe = %f maxf = %f velme = %f velmd = %f cont= %d\n", maxDireita, maxEsquerda, maxFrente, valueMotorE, valueMotorD,countdown);
 
 
 
