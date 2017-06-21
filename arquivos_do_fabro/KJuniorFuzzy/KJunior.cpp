@@ -5,7 +5,7 @@
 #include <math.h>
 #include "rightMotor.h"
 #include "leftMotor.h"
-
+#include <time.h>
 extern "C" {
 	#include "extApi.h"
 }
@@ -39,7 +39,8 @@ float virarNada(float fuzzy){
 }
 
 int main(int argc, const char * argv[]) {
-
+	int counter = 0;
+	srand(time(NULL));
         std::string s;
 	int countdown = 0;
 	int portNb, leftMotorHandle, rightMotorHandle;
@@ -229,17 +230,29 @@ a remote API function return code
 
 			// maxDireita maxEsquerda maxFrente*/
 			float valueFuzzyE;
-			float valueFuzzyD;
+			float valueFuzzyD; 
+			counter++;
+			if(counter > 10000) counter = 0;
 			if((fuzzyFy(maxFrente) == 1 && countdown == 0)){
 				//countdown = 150;
 				ginga = !ginga;
 			}
+
 			if(countdown == 0){
-				valueMotorE =  3 +(virarPouco(fuzzyFy(maxDireita))+virarMuito(fuzzyFy(maxDireita))+virarNada(fuzzyFy(maxDireita)));
-                                if(fuzzyFy(maxDireita) == 0)
-                                valueMotorD = 3 +(virarPouco(fuzzyFy(maxEsquerda))+virarMuito(fuzzyFy(maxEsquerda))+virarNada(fuzzyFy(maxEsquerda)));
-                                else
-                                valueMotorD = 3;
+				if(counter > 5000){
+					valueMotorE =  3*(3 +(virarPouco(fuzzyFy(maxDireita))+virarMuito(fuzzyFy(maxDireita))+virarNada(fuzzyFy(maxDireita))));
+		                        if(fuzzyFy(maxDireita) == 0)
+		                        valueMotorD =  3*(3 +(virarPouco(fuzzyFy(maxEsquerda))+virarMuito(fuzzyFy(maxEsquerda))+virarNada(fuzzyFy(maxEsquerda))));
+		                        else
+		                        valueMotorD = 3;}
+				else{
+					valueMotorD =  3*(3 +(virarPouco(fuzzyFy(maxEsquerda))+virarMuito(fuzzyFy(maxEsquerda))+virarNada(fuzzyFy(maxEsquerda))));
+					
+		                        if(fuzzyFy(maxDireita) == 0)
+		                        valueMotorE =  3*(3 +(virarPouco(fuzzyFy(maxDireita))+virarMuito(fuzzyFy(maxDireita))+virarNada(fuzzyFy(maxDireita))));
+		                        else
+		                        valueMotorE = 3;
+					}
 			}else if(ginga == true){
 				valueMotorE =	-2.5;
 				valueMotorD = 	+2.5;
@@ -252,7 +265,7 @@ a remote API function return code
 				countdown--;
 
 			}
-        printf("\n maxd= %f maxe = %f maxf = %f velme = %f velmd = %f cont= %d\n", maxDireita, maxEsquerda, maxFrente, valueMotorE, valueMotorD,countdown);
+        printf("\n maxd= %f maxe = %f maxf = %f velme = %f velmd = %f cont= %d\n", maxDireita, maxEsquerda, maxFrente, valueMotorE, valueMotorD,counter);
 
 
 
