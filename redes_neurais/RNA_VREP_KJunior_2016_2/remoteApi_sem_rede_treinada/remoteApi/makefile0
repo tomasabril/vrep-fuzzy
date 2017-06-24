@@ -1,0 +1,34 @@
+CC=g++
+cc=gcc
+CFLAGS=
+OBJECTS=neuron.o neuronet.o trnpair.o vectorpair.o neural.o recneuronet.o
+LIBS= -L/usr/local/lib -lm 
+INCLUDES= -I /usr/local/include/g++-3 -I /usr/openwin/include -O3
+
+neural:	neuron.o neuronet.o trnpair.o vectorpair.o neural.o recneuronet.o
+	$(CC) neuron.o neuronet.o trnpair.o vectorpair.o neural.o recneuronet.o -L/usr/local/lib -o neural -lm
+
+neurofun.o: $(OBJECTS)
+	$(CC) $(CFLAGS) $(INCLUDES) -c neurofun.c -o neurofun.o
+
+neuron.o: neuron.cc neuro.h
+	$(CC) $(CFLAGS) -c neuron.cc $(INCLUDES) -o neuron.o
+
+neuronet.o: neuronet.cc neuro.h
+	$(CC) $(CFLAGS) -c neuronet.cc $(INCLUDES) -o neuronet.o
+
+trnpair.o: trnpair.cc neuro.h
+	$(CC) $(CFLAGS) -c trnpair.cc $(INCLUDES) -o trnpair.o
+
+vectorpair.o:  vectorpair.cc neuro.h
+	$(CC) $(CFLAGS) -c vectorpair.cc $(INCLUDES) -o vectorpair.o
+
+neural.o: neural.cc neuro.h
+	$(CC) $(CFLAGS) -c neural.cc $(INCLUDES) -o neural.o
+
+recneuronet.o: recneuronet.cc neuro.h
+	$(CC) $(CFLAGS) -c recneuronet.cc $(INCLUDES) -o recneuronet.o
+
+clean:
+	rm *.o
+	rm neural 

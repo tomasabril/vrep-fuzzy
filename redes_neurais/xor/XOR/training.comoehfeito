@@ -1,0 +1,5 @@
+20	- Number of Training Patterns
+1	- Number of Inputs to train 
+t1so.txt- One file for each Input
+1	- Number of Outputs to train
+t2so.txt- one file for each Output
