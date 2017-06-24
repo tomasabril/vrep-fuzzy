@@ -1,8 +1,10 @@
+#esse eh o makefile 0
+
 CC=g++
 cc=gcc
 CFLAGS=
 OBJECTS=neuron.o neuronet.o trnpair.o vectorpair.o neural.o recneuronet.o
-LIBS= -L/usr/local/lib -lm 
+LIBS= -L/usr/local/lib -lm
 INCLUDES= -I /usr/local/include/g++-3 -I /usr/openwin/include -O3
 
 neural:	neuron.o neuronet.o trnpair.o vectorpair.o neural.o recneuronet.o
@@ -31,4 +33,4 @@ recneuronet.o: recneuronet.cc neuro.h
 
 clean:
 	rm *.o
-	rm neural 
+	rm neural

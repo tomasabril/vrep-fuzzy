@@ -1,3 +1,5 @@
+# esse eh o makefile 1
+
 CFLAGS = -I../remoteApi -I../include -DNON_MATLAB_PARSING -DMAX_EXT_API_CONNECTIONS=255
 
 OS = $(shell uname -s)
@@ -7,7 +9,7 @@ else
 	CFLAGS += -D__APPLE__
 endif
 
-all: 
+all:
 	g++ $(CFLAGS) -c controleneural.c -o controleneural.o
 	gcc $(CFLAGS) -c ../remoteApi/extApi.c -o extApi.o
 	gcc $(CFLAGS) -c ../remoteApi/extApiPlatform.c -o extApiPlatform.o

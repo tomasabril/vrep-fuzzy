@@ -1,0 +1,20 @@
+passo 1:
+editar training.juning com os dados de treinamento
+
+passo 2:
+executar o arquivo makefile0
+
+passo 3:
+executar o comando ./neural junin
+
+passo 4:
+executar o makefile1
+
+passo 5:
+copiar o juninClient pra pasta do vrep e executar la
+dentro do vrep precisa editar o arquivo do robo pra ele procurar por esse juningClient
+linha 60 do script juningClient 
+pros makefiles tem que ficar renomeando pra poder dar make em um de cada vez
+
+nunca fazer make clean!
+
