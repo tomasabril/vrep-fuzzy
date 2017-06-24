@@ -239,7 +239,7 @@ void neural_net::load_net(char *extension)
 
   strcpy(fileName, FILE_NEURAL);
   strcat(fileName, extension);
-  if ( (fileNeuron = fopen ( "/home/brudp/Downloads/V-REP_PRO_EDU_V3_3_2_64_Linux/programming/remoteApi/neuralnet.junin", "r" )) == NULL )
+  if ( (fileNeuron = fopen ( "neuralnet.junin", "r" )) == NULL )
     {
       cout << "Error in file creation: " << fileName << "\n";
       exit(1);
