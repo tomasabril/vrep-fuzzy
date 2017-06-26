@@ -6,7 +6,5 @@
 51	- Number of neurons of 1st hidden layer
 4	- Number of neurons of 2nd hidden layer...etc!
 0.5	- Parameter momentum
-0.3	- Parameter learning-rate
+0.6	- Parameter learning-rate
 0.0001	- Parameter max_err
-
-
