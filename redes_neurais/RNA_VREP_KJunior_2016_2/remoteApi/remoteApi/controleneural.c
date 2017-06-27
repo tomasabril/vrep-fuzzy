@@ -104,7 +104,7 @@ int main(int argc,char* argv[])
                 float distance = pow(distanceAxis[0],2) + pow(distanceAxis[1],2) + pow(distanceAxis[2],2);
                 distance = sqrt(distance);
                 if(distance <= 0.001 && i != 5)
-                    distance = 1;
+                    distance = 0;
 
 
                 distanceSensors[i] = distance;
@@ -115,8 +115,8 @@ int main(int argc,char* argv[])
 
             motorSpeeds = controlador(distanceSensors);
             printf(" %f, %f", motorSpeeds[0], motorSpeeds[1]);
-            float velMotorD = motorSpeeds[0]*100;
-            float velMotorE = motorSpeeds[1]*100;
+            float velMotorD = motorSpeeds[0]*6;
+            float velMotorE = motorSpeeds[1]*6;
 
             simxSetJointTargetVelocity(clientID,leftMotorHandle,velMotorE,simx_opmode_oneshot);
             simxSetJointTargetVelocity(clientID,rightMotorHandle,velMotorD,simx_opmode_oneshot);
