@@ -60,7 +60,7 @@ extern "C" {
 
 int main(int argc,char* argv[])
 {
-    
+
     int portNb=0;
     int leftMotorHandle;
     int rightMotorHandle;
@@ -97,7 +97,7 @@ int main(int argc,char* argv[])
             for(int i = 0; i < 6; i++){
                 float distanceAxis[3];
 
-                simxReadProximitySensor(clientID,sensor[i],NULL,&(distanceAxis[0]),NULL,NULL,simx_opmode_buffer);
+                simxReadProximitySensor(clientID,sensor[i],NULL,&(distanceAxis[0]),NULL,NULL,simx_opmode_streaming);
 
 
 
