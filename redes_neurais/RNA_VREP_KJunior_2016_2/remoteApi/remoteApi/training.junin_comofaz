@@ -4,7 +4,7 @@
 1   -sensor 2 esq/meio
 1   -sensor da frente -> meio
 1   -sensor 4 dir/meio
-1   -sensor 5 esquerda
+1   -sensor 5 dir
 1   -sensor de tras
 2   -quantidade de saidas
 0.5 -motor esquerda
@@ -18,6 +18,6 @@ motores sao ativados entre -1 e +1
 -- --
 dados de andar reto
 
-dados de virar a esquerda
-
 dados de virar a direita
+
+dados de virar a esquerda
