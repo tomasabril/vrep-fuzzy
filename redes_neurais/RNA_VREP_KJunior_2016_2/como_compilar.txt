@@ -13,6 +13,8 @@ executar o makefile1
 passo 5:
 copiar o juninClient E TAMBEM o neuralnet.junin pra pasta do vrep e executar la
 
+--  --  --  --  --  --  --  --  --  --
+
 dentro do vrep precisa editar o arquivo (script) do robo pra ele procurar por esse juningClient na linha 60 do script juningClient
 
 pros makefiles tem que ficar renomeando pra poder dar make em um de cada vez
@@ -23,5 +25,7 @@ no arquivo controleneural.c editar as linhas 118 e 119 para multiplicar a veloci
 
 arquivo controleneural.c mudar linha 100 para
 simxReadProximitySensor(clientID,sensor[i],NULL,&(distanceAxis[0]),NULL,NULL,simx_opmode_streaming);
+
+--  --  --  --  --  --  --  --  --  --
 
 nunca fazer make clean!
