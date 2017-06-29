@@ -108,6 +108,8 @@ int main(int argc,char* argv[])
 
 
                 distanceSensors[i] = distance;
+
+                //o sensor de tras é sempre 0, podemos ignora-lo
                 if (i == 5){
                     distanceSensors[i] = 0.0;
                 }
