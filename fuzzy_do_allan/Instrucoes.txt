@@ -1,0 +1,11 @@
+﻿Passos para executar o programa na plataforma V-REP
+
+1) Entrar na pasta make
+2) Abrir arquivo makefile em qualquer aplicativo editor de texto
+3) Modificar o diretório para a pasta principal do V-REP
+4) Rodar o makefile (Necessário Linux ou MAC)
+5) Abrir o V-REP
+6) Copiar o conteúdo do arquivo “KJUNIOR_LUAfileScript.lua” para dentro do script do robô KJunior
+7) Pronto para testar
+
+

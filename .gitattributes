@@ -6,13 +6,24 @@
 *.jpg binary
 *.jpeg binary
 *.gif binary
-*.pdf binary
 *.psd binary
 
 # do not mess with those
+*.ttt binary
+
+# documents
+*.doc  diff=astextplain
+*.DOC	diff=astextplain
+*.docx	diff=astextplain
+*.DOCX	diff=astextplain
+*.dot	diff=astextplain
+*.DOT	diff=astextplain
+*.pdf	diff=astextplain
+*.PDF	diff=astextplain
+*.rtf	diff=astextplain
+*.RTF	diff=astextplain
 *.ods binary
 *.odt binary
-*.ttt binary
 
 # Explicitly declare text files you want to always be normalized and converted
 #sources

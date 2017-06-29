@@ -1,0 +1,271 @@
+// Project FLIE-Fuzzy Logic Inference Engine - João Alberto Fabro - out/1996
+
+// File flie.cc
+
+#include <stdlib.h> // Random!
+#include <stdio.h> // Random!
+//#define DOS
+#include "leftMotor.h"
+
+/*Deve-se definir um sistema de controle que irá conter as regras.*/
+fuzzy_control fuzzycontrolE;
+
+/*No programa principal é necessário instanciar as variáveis para conter
+todos os conjuntos fuzzy e também defini-los.*/
+
+trapezoid_category cat2[13];
+
+
+
+/*Deve-se definir as variáveis linguísticas que irão conter os conjuntos fuzzy*/
+
+linguisticvariable sens_front2, sens_right2, sens_left2, lingLeftMotor;
+
+
+
+/*Deve-se definir as regras de inferência que irão reger o comportamento do
+sistema de controle.É necessário instanciá-los.*/
+
+rule infruleE[99];
+
+leftMotor::leftMotor(){
+	mainE();
+}
+
+leftMotor::~leftMotor(){
+
+}
+
+void leftMotor::mainE()
+{
+        int i;
+
+
+
+/*deve-se definir variáveis que irão conter as entradas e saídas(defuzificadas)
+do sistema submetidas ao controle.*/
+
+float SumError, ControlOutput;
+
+
+
+	cat2[0].setname("L");
+	cat2[0].setrange(0, 800);
+	cat2[0].setval(0, 0, 600, 800);
+
+	cat2[1].setname("M");
+	cat2[1].setrange(600, 1600);
+	cat2[1].setval(600, 800, 1400, 1600);
+
+	cat2[2].setname("P");
+	cat2[2].setrange(1400, 2000);
+	cat2[2].setval(1400, 1600, 2000, 2000);
+
+
+
+
+	/*Define-se a Variável linguística Error*/
+
+	sens_right2.setname("Sensores da direita");
+
+	sens_right2.includecategory(&cat2[0]);
+
+	sens_right2.includecategory(&cat2[1]);
+
+	sens_right2.includecategory(&cat2[2]);
+
+	//sens_right2.includecategory(&cat2[3]);
+
+	//sens_right2.includecategory(&cat2[4]);
+
+
+//	cat2[5].setname("ML");
+//	cat2[5].setrange(0, 130);
+//	cat2[5].setval(0, 0, 100, 130);
+
+	cat2[3].setname("L");
+	cat2[3].setrange(0, 800);
+	cat2[3].setval(0, 0, 600, 800);
+
+	cat2[4].setname("M");
+	cat2[4].setrange(600, 1600);
+	cat2[4].setval(600, 800, 1400, 1600);
+
+	cat2[5].setname("P");
+	cat2[5].setrange(1400, 2000);
+	cat2[5].setval(1400, 1600, 2000, 2000);
+	
+//	cat2[9].setname("MP");
+//	cat2[9].setrange(850, 2000);
+//	cat2[9].setval(850, 880, 2000, 2000);
+
+
+	/*Define-se a Variável linguística Error*/
+
+	sens_left2.setname("Sensores da esquerda");
+
+	sens_left2.includecategory(&cat2[3]);
+
+	sens_left2.includecategory(&cat2[4]);
+
+	sens_left2.includecategory(&cat2[5]);
+
+	//sens_left2.includecategory(&cat2[8]);
+
+	//sens_left2.includecategory(&cat2[9]);
+
+
+
+	/*Define-se os conjuntos fuzzy para a variável linguística Control*/
+
+	//cat2[10].setname("ML");
+	//cat2[10].setrange(0, 130);
+	//cat2[10].setval(0, 0, 100, 130);
+
+	cat2[6].setname("L");
+	cat2[6].setrange(0, 800);
+	cat2[6].setval(0, 0, 600, 800);
+
+	cat2[7].setname("M");
+	cat2[7].setrange(600, 1600);
+	cat2[7].setval(600, 800, 1400, 1600);
+
+	cat2[8].setname("P");
+	cat2[8].setrange(1400, 2000);
+	cat2[8].setval(1400, 1600, 2000, 2000);
+	
+	//cat2[14].setname("MP");
+	//cat2[14].setrange(850, 2000);
+	//[14].setval(850, 880, 2000, 2000);
+
+
+	/*Defini-se a Variável linguística Error*/
+
+	sens_front2.setname("Sensores da frente");
+
+	sens_front2.includecategory(&cat2[6]);
+
+	sens_front2.includecategory(&cat2[7]);
+
+	sens_front2.includecategory(&cat2[8]);
+
+	//sens_front2.includecategory(&cat2[13]);
+
+	//sens_front2.includecategory(&cat2[14]);
+
+	/*Define-se os conjuntos fuzzy para a varivel lingustica Control*/
+
+	cat2[9].setname("RT");
+	cat2[9].setrange(-6, -2);
+	cat2[9].setval(-6,-6,-4,-2);
+
+	//cat2[16].setname("MT");
+	//cat2[16].setrange(-8,-2);
+	//cat2[16].setval(-8, -7, -3, -2);
+
+	cat2[10].setname("DT");
+	cat2[10].setrange(-4, -1);
+	cat2[10].setval(-4,-2,1,-1);
+
+	cat2[11].setname("DF");
+	cat2[11].setrange(1, 4);
+	cat2[11].setval(1,-1,2,4);
+
+	//cat2[19].setname("MF");
+	///cat2[19].setrange(2, 8);
+	//cat2[19].setval(2, 3, 7, 8);
+
+	cat2[12].setname("RF");
+	cat2[12].setrange(2,6);
+	cat2[12].setval(2,4,6,6);
+
+
+	/*Defini-se a variável linguística Control*/
+
+	lingLeftMotor.setname("Controle");
+
+	//lingLeftMotor.includecategory(&cat2[15]);
+
+	//lingLeftMotor.includecategory(&cat2[16]);
+
+	lingLeftMotor.includecategory(&cat2[9]);
+
+	lingLeftMotor.includecategory(&cat2[10]);
+
+	lingLeftMotor.includecategory(&cat2[11]);
+	
+	lingLeftMotor.includecategory(&cat2[12]);
+
+	/*Defini-se o método defuzzificação*/
+
+	fuzzycontrolE.set_defuzz(CENTEROFAREA);
+
+
+	/* Defini-se o fuzzy_control pelas entradas fuzzy( Error, DeltaError)
+	 e saídas (Control) )*/
+
+	fuzzycontrolE.definevars(sens_left2, sens_front2, sens_right2, lingLeftMotor);
+
+
+
+	fuzzycontrolE.insert_rule("L","L","L","RF");
+	fuzzycontrolE.insert_rule("L","L","M","DF");
+	fuzzycontrolE.insert_rule("L","L","P","DT");
+
+	fuzzycontrolE.insert_rule("L","M","L","DT");
+	fuzzycontrolE.insert_rule("L","M","M","DT");
+	fuzzycontrolE.insert_rule("L","M","P","RT");
+
+	fuzzycontrolE.insert_rule("L","P","L","RT");
+	fuzzycontrolE.insert_rule("L","P","M","RT");
+	fuzzycontrolE.insert_rule("L","P","P","RT");
+
+
+
+	fuzzycontrolE.insert_rule("M","L","L","RF");
+	fuzzycontrolE.insert_rule("M","L","M","RT");
+	fuzzycontrolE.insert_rule("M","L","P","RT");
+
+
+	fuzzycontrolE.insert_rule("M","M","L","RF");
+	fuzzycontrolE.insert_rule("M","M","M","RT");
+	fuzzycontrolE.insert_rule("M","M","P","RT");
+
+	fuzzycontrolE.insert_rule("M","P","L","RF");
+	fuzzycontrolE.insert_rule("M","P","M","RT");
+	fuzzycontrolE.insert_rule("M","P","P","RT");
+	
+	
+	fuzzycontrolE.insert_rule("P","L","L","RF");
+	fuzzycontrolE.insert_rule("P","L","M","RF");
+	fuzzycontrolE.insert_rule("P","L","P","RT");
+	
+	fuzzycontrolE.insert_rule("P","M","L","RF");
+	fuzzycontrolE.insert_rule("P","M","M","RF");
+	fuzzycontrolE.insert_rule("P","M","P","RT");
+		
+	fuzzycontrolE.insert_rule("P","P","L","RF");
+	fuzzycontrolE.insert_rule("P","P","M","RF");
+	fuzzycontrolE.insert_rule("P","P","P","RT");
+
+// Defini-se a leitura dos sensores do seu sistema
+float ErrorInput = -100.0;
+float DeltaErrorInput = 0.0;
+
+float min;
+char fcfilename[20];
+
+
+
+	fuzzycontrolE.set_defuzz(CENTEROFAREA);
+
+// Teste para os controles
+
+//min =  navio(fc,1);
+//  printf("Minimum Error = %f\n", min);
+  fuzzycontrolE.save_m("controlebottom", 0);
+}
+
+float leftMotor::makeInference(float input1, float input2, float input3){
+	return fuzzycontrolE.make_inference(input1, input2, input3);
+}

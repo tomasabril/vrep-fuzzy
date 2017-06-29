@@ -1,0 +1,29 @@
+	  M , M , M , RF  
+	  M , M , P , MF  
+	  M , M , MP , RF  
+
+		  M , P , M , DF  
+		  M , P , P , MF  
+		  M , P , MP , RF  
+
+	  M , MP , M , RF  
+	  M , MP , P , RF  
+	  M , MP , MP, RF  
+	  P , M , M , MF  
+	  P , M , P , RF  
+	  P , M , MP , MF  
+	  P , P , M , DT  
+	  P , P , P , MF  
+	  P , P , MP , MF  
+	  P , MP , M , MT  
+	  P , MP , P , DF  
+	  P , MP , MP , DF  
+	  MP , M , M , DT  
+	  MP , M , P , DF  
+	  MP , M , MP , DT  
+	  MP , P , M , MT  
+	  MP , P , P , MF  
+	  MP , P , MP , DT  
+	  MP , MP , M , DT  
+	  MP , MP , P , DT  
+	  MP , MP , MP , DF  
