@@ -1,0 +1,22 @@
+20  -quantidade de dados
+6   -quantidade de entradas
+1   -sensor 1 direita
+1   -sensor 2
+1   -sensor da frente
+1   -sensor 4
+1   -sensor 5 esquerda
+1   -sensor de tras
+2   -quantidade de saidas
+0.5 -motor esquerda
+0.5 -motor direita
+
+no meu treinamento
+sensor tem 1 quando esta longe
+sensor tem 0.1 quando comeca a medir ate 0
+motores sao ativados entre -1 e +1
+
+dados de andar reto
+
+dados de virar a esquerda
+
+dados de virar a direita

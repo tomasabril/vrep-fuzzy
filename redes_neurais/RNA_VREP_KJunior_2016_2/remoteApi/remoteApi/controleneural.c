@@ -115,8 +115,8 @@ int main(int argc,char* argv[])
 
             motorSpeeds = controlador(distanceSensors);
             printf(" %f, %f", motorSpeeds[0], motorSpeeds[1]);
-            float velMotorD = motorSpeeds[0]*6;
-            float velMotorE = motorSpeeds[1]*6;
+            float velMotorD = motorSpeeds[0]*1;
+            float velMotorE = motorSpeeds[1]*1;
 
             simxSetJointTargetVelocity(clientID,leftMotorHandle,velMotorE,simx_opmode_oneshot);
             simxSetJointTargetVelocity(clientID,rightMotorHandle,velMotorD,simx_opmode_oneshot);
