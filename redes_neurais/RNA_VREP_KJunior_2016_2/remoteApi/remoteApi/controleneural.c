@@ -22,9 +22,9 @@ float* controlador(float* estado)
      in[3] = estado.dist4;
      in[4] = estado.dist5;
      in[5] = estado.dist6;*/
-     for(int i=0;i<6;i++)
-       printf("%f ", in[i]);
-     printf("\n");
+    //  for(int i=0;i<6;i++)
+    //    printf("%f ", in[i]);
+    //  printf("\n");
 
    TRNTEST = new training_pair;
 
@@ -36,12 +36,12 @@ float* controlador(float* estado)
    out = TRNTEST->get_out();
 
 
-  printf("Cheguei0");
-  for(i=0;i<2;i++)
-       printf("%f ", out[i]);
-         printf("Cheguei1");
-     printf("\n");
-     printf("Cheguei2");
+  // printf("Cheguei0");
+  // for(i=0;i<2;i++)
+  //      printf("%f ", out[i]);
+  //        printf("Cheguei1");
+  //    printf("\n");
+  //    printf("Cheguei2");
 
   interface[0]= out[0];  interface[1]= out[1];
 
@@ -119,7 +119,7 @@ int main(int argc,char* argv[])
               distanceSensors[5] = 0;
 
             motorSpeeds = controlador(distanceSensors);
-            printf(" %f, %f", motorSpeeds[0], motorSpeeds[1]);
+            //printf(" %f, %f", motorSpeeds[0], motorSpeeds[1]);
             float velMotorD = motorSpeeds[0]*3;
             float velMotorE = motorSpeeds[1]*3;
 
