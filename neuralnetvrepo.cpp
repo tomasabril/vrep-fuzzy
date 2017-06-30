@@ -95,7 +95,7 @@ int main(){
 				valueMotorE = 5;
 
             valueMotorE = (3 +(virarPouco(fuzzyFy(maxDireita))+virarMuito(fuzzyFy(maxDireita))+virarNada(fuzzyFy(maxDireita))));
-            if(fuzzyFy(maxDireita) == 0)
+            if(fuzzyFy(maxDireita) <0.5)
                 valueMotorD = (3 +(virarPouco(fuzzyFy(maxEsquerda))+virarMuito(fuzzyFy(maxEsquerda))+virarNada(fuzzyFy(maxEsquerda))));
             else
                 valueMotorD = 3;
