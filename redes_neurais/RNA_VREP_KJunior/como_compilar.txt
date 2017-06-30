@@ -1,0 +1,26 @@
+passo 1:
+editar training.juning com os dados de treinamento
+
+passo 2:
+executar compilar.sh
+
+passo 3:
+copiar o juninClient E TAMBEM o neuralnet.junin pra pasta do vrep e executar la
+
+--  --  --  --  --  --  --  --  --  --
+ALGUMAS MUDANCAS FEITAS
+
+dentro do vrep foi editado o arquivo (script) do robo pra ele procurar por esse juningClient na linha 60 do script juningClient
+
+No neuralnet.cc editado a linha 242 e mudar o argumento do fopen para
+fopen ( "neuralnet.junin", "r" ))
+
+no arquivo controleneural.c editado as linhas 118 e 119 para multiplicar a velocidade por um numero menor que 100. 5 ou 10 parece ser bom.
+
+arquivo controleneural.c mudar linha 100 para
+simxReadProximitySensor(clientID,sensor[i],NULL,&(distanceAxis[0]),NULL,NULL,simx_opmode_streaming);
+
+--  --  --  --  --  --  --  --  --  --
+
+não fazer make clean!
+
