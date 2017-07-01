@@ -7,6 +7,8 @@ Sistemas Inteligentes 1
 
 video do robo treinado com rede neural
 
+<https://youtu.be/aK2O64amINE>
+
 <https://youtu.be/U46yRWEapMk>
 
 ----------
